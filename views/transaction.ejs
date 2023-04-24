@@ -1,0 +1,93 @@
+<h1>Transactions for
+    <%= user.username %>
+</h1>
+
+<h3>Here is your list of things to do!</h3>
+<table class="table table-bordered">
+    <tr>
+        <th scope="col">
+            <a href="/transaction/byCategory">
+                <button type="button" class="btn btn-primary">group by category</button>
+            </a>
+        </th>
+        <th scope="col">
+            <a href="?sortBy=category">
+                <button type="button" class="btn btn-primary">sort by category</button>
+            </a>
+        </th>
+        <th scope="col">
+            <a href="?sortBy=amount">
+                <button type="button" class="btn btn-primary">sort by amount</button>
+            </a>
+        </th>
+        <th scope="col">
+            <a href="?sortBy=description">
+                <button type="button" class="btn btn-primary">sort by description</button>
+            </a>
+        </th>
+        <th scope="col">
+            <a href="?sortBy=date">
+                <button type="button" class="btn btn-primary">sort by date</button>
+            </a>
+        </th>
+    </tr>
+</table>
+
+<table class="table table-striped table-bordered">
+    <thead>
+        <tr>
+            <th scope="col">Description</th>
+            <th scope="col">amount</th>
+            <th scope="col">Category</th>
+            <th scope="col">Date</th>
+            <th scope="col">Delete</th>
+            <th scope="col">Edit</th>
+        </tr>
+    </thead>
+    <tbody>
+        <% transactions.forEach(transaction => { %>
+            <tr>
+                <td>
+                    <%= transaction.description %>
+                </td>
+                <td>
+                    <%= transaction.amount %>
+                </td>
+                <td>
+                    <%= transaction.category %>
+                </td>
+                <td>
+                    <%= transaction.date.toLocaleDateString('en-US', { weekday: 'short', month: 'short', day: 'numeric', year: 'numeric' }) %>
+                </td>
+                <td>
+                    <a href="/transaction/remove/<%=transaction._id %>">
+                        <i class="bi bi-trash"></i>
+                    </a>
+                </td>
+                <td>
+                    <a href="/transaction/edit/<%=transaction._id %>">
+                        <i class="bi bi-pencil-square"></i>
+                    </a>
+                </td>
+
+            </tr>
+            <%}) %>
+    </tbody>
+</table>
+
+<h1>Add a New Transaction</h1>
+<form method="post" action="transaction">
+    <label for="description">Description:</label>
+    <input type="text" name="description" placeholder="Description" required>
+    <br>
+    <label for="amount">Amount:</label>
+    <input type="text" name="amount" placeholder="Amount" required>
+    <br>
+    <label for="category">Category:</label>
+    <input type="text" name="category" placeholder="Category" required>
+    <br>
+    <label for="date">Date:</label>
+    <input type="text" name="date" placeholder="mm/dd/yyyy" required>
+    <br>
+    <input type="submit" value="store">
+</form>
